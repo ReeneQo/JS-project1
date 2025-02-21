@@ -1,16 +1,21 @@
+import '../styles/main.css';
+import logo from '../assets/images/sckrewer.png';
+import logo1 from '../assets/images/molotok.png';
+import logo2 from '../assets/images/pilla.png';
+
 const cardsData = [
     {
-        image: "./assets/images/molotok.png",
+        image: logo,
         title: "Молоток",
         description: "Молоток обыкновенный качественный хороший, как у деда"
     },
     {
-        image: "./assets/images/sckrewer.png",
+        image: logo1,
         title: "Отвертка",
         description: "Отвертка обыкновенная базовая"
     },
     {
-        image: "./assets/images/pilla.png",
+        image: logo2,
         title: "Пила",
         description: "Что бы пилить"
     },
