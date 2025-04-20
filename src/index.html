@@ -20,6 +20,7 @@
             placeholder="Ссылка на изображение"
             class="newCardInput"
           />
+          <p id="imageInput-error" class="error-message">Введите корректный URL изображения (например: https://example.com/image.jpg)</p>
           <input
             type="text"
             id="title-input"
@@ -27,6 +28,7 @@
             maxlength="100"
             class="newCardInput"
           />
+          <p id="titleInput-error" class="error-message">Заголовок должен содержать минимум 3 символа (можно буквы, цифры, пробелы и ,.!?-)</p>
           <input
             type="text"
             id="text-input"
@@ -34,6 +36,7 @@
             maxlength="100"
             class="newCardInput"
           />
+          <p id="descInput-error" class="error-message">Описание должно быть от 10 до 500 символов</p>
           <button id="add-card-button">Добавить карточку</button>
           <button class="deleteBut">Удалить все карточки</button>
         </div>

@@ -1,18 +1,16 @@
 import "../styles/main.css";
-import { cardsData } from "../scripts/cards.js";
+import { cardsData } from "./data.js";
+
 import {
-  ul,
-  imageInput,
-  titleInput,
-  descriptionInput,
-  addCardButton,
-  deleteBut,
-  RenderCards,
-  editImageInput,
   editTitleInput,
   editDescInput,
+  editImageInput,
   currentEditingCard
-} from "../scripts/dom.js";
+} from './modal.js'
+
+import {
+  RenderCards,
+} from "./dom.js";
 
 const editForm = document.getElementById("editForm");
 
@@ -66,42 +64,9 @@ cardsData.sort((a, b) => a.title.localeCompare(b.title));
 
 RenderCards(cardsData);
 
-addCardButton.addEventListener("click", () => {
-  const image = imageInput.value;
-  const title = titleInput.value;
-  const description = descriptionInput.value;
 
-  if (image && title && description) {
-    cardsData.push({ image, title, description });
 
-    cardsData.sort((a, b) => a.title.localeCompare(b.title));
 
-    RenderCards(cardsData);
-
-    imageInput.value = "";
-    titleInput.value = "";
-    descriptionInput.value = "";
-  } else {
-    alert("Пожалуйста, заполните все поля!");
-  }
-});
-
-deleteBut.addEventListener("click", () => {
-  ul.innerHTML = "";
-});
-
-const Inputs = [
-  document.getElementById("title-input"),
-  document.getElementById("text-input"),
-];
-
-Inputs.forEach((input) => {
-  input.addEventListener("input", () => {
-    if (input.value.length === 100) {
-      alert("Ограничение символов 100");
-    }
-  });
-});
 
 
 

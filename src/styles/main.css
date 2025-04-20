@@ -289,3 +289,11 @@ button:hover {
   color: red;
   margin: 5px 0 0 0;
 }
+
+#imageInput-error,
+#titleInput-error,
+#descInput-error {
+  display: none;
+  color: red;
+  margin: 5px 0 0 0 ;
+}

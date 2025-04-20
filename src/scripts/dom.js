@@ -1,40 +1,13 @@
-import { cardsData } from "./cards";
+import { cardsData } from "./data.js";
+import { openEditModal } from "./modal";
 
 const ul = document.getElementById("card_ul");
 const template = document.getElementById("template").content;
+const addCardButton = document.getElementById("add-card-button");
+const deleteBut = document.querySelector(".deleteBut");
 const imageInput = document.getElementById("image-input");
 const titleInput = document.getElementById("title-input");
 const descriptionInput = document.getElementById("text-input");
-const addCardButton = document.getElementById("add-card-button");
-const deleteBut = document.querySelector(".deleteBut");
-const editModal = document.getElementById("editModal");
-const editImageInput = document.getElementById("edit-image");
-const editTitleInput = document.getElementById("edit-title");
-const editDescInput = document.getElementById("edit-description");
-const closeModalBtn = document.querySelector(".close");
-
-let currentEditingCard = null;
-
-function openEditModal(card) {
-  currentEditingCard = card
-  editImageInput.value = card.image
-  editTitleInput.value = card.title
-  editDescInput.value = card.description
-
-  document.querySelectorAll('.error-message').forEach(el => el.textContent = '')
-
-  editModal.style.display = 'block';
-}
-
-closeModalBtn.addEventListener("click", () => {
-  editModal.style.display = "none";
-});
-
-editModal.addEventListener("click", (event) => {
-  if (event.currentTarget === event.target) {
-    editModal.style.display = "none";
-  }
-});
 
 function createCard(card) {
   const clone = template.cloneNode(true);
@@ -71,17 +44,55 @@ function RenderCards(cardsData) {
   cardsData.forEach((card) => createCard(card));
 }
 
-export {
-  ul,
-  imageInput,
-  titleInput,
-  descriptionInput,
-  addCardButton,
-  deleteBut,
-  RenderCards,
-  openEditModal,
-  editTitleInput,
-  editDescInput,
-  editImageInput,
-  currentEditingCard
-};
+addCardButton.addEventListener("click", () => {
+  const newCard = {
+    image: imageInput.value.trim(),
+    title: titleInput.value.trim(),
+    description: descriptionInput.value.trim(),
+  };
+
+  let isValid = true;
+
+  const urlPattern =
+    /^(http(s?):\/\/)?[^\s/$.?#].[^\s]*\.(jpg|jpeg|png|gif|webp|svg)(\?.*)?$/i;
+  if (!urlPattern.test(newCard.image)) {
+    document.getElementById("imageInput-error").style.display = "block";
+    isValid = false;
+  }
+
+  const titlePattern = /^[\p{L}\d\s.,!?-]+$/u;
+  if (!titlePattern.test(newCard.title) || newCard.title.length < 3) {
+    document.getElementById("titleInput-error").style.display = "block";
+    isValid = false;
+  }
+
+  if (newCard.description.length < 10 || newCard.description.length > 500) {
+    document.getElementById("descInput-error").style.display = "block";
+    isValid = false;
+  }
+
+  if (isValid) {
+    const errors = [
+      document.getElementById("imageInput-error"),
+      document.getElementById("titleInput-error"),
+      document.getElementById("descInput-error"),
+    ];
+    errors.forEach((er) => (er.style.display = "none"));
+
+    cardsData.push(newCard);
+
+    cardsData.sort((a, b) => a.title.localeCompare(b.title));
+
+    RenderCards(cardsData);
+
+    imageInput.value = "";
+    titleInput.value = "";
+    descriptionInput.value = "";
+  }
+});
+
+deleteBut.addEventListener("click", () => {
+  ul.innerHTML = "";
+});
+
+export { ul, addCardButton, deleteBut, RenderCards };
